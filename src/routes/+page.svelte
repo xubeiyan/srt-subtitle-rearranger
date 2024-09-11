@@ -10,6 +10,8 @@
   let outputContent = "";
   // 文件位置
   let fileLocation = "";
+  // 文件名称
+  let toSaveFileName = "";
 
   // 打开文件选择
   const openSelectFile = () => {
@@ -72,6 +74,7 @@
   // 处理上传文件
   const handleFileInput = (e) => {
     let file = e.target.files[0];
+    toSaveFileName = `${file.name.split('.')[0]}_rearranged.srt`;
     let reader = new FileReader();
     reader.readAsText(file, "UTF-8");
     reader.addEventListener("loadend", (e) => {
@@ -90,6 +93,7 @@
   // 保存文件
   const saveSRTfile = async () => {
     const filePath = await save({
+      defaultPath: toSaveFileName,
       filters: [
         {
           name: "SRT file",
@@ -97,6 +101,9 @@
         },
       ],
     });
+
+    // 打开对话框时点击取消需要处理
+    if (filePath == null) return;
 
     fileLocation = filePath;
 

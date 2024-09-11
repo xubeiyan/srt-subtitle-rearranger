@@ -1,6 +1,6 @@
 {
   "productName": "sub-rearranger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "identifier": "moe.mea.sub-rearranger",
   "build": {
     "beforeDevCommand": "pnpm dev",
