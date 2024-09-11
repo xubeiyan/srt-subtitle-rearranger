@@ -1,7 +1,7 @@
 {
-  "productName": "tauri-app",
+  "productName": "sub-rearranger",
   "version": "0.1.0",
-  "identifier": "com.tauri-app.app",
+  "identifier": "moe.mea.sub-rearranger",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
