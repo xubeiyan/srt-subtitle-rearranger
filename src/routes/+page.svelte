@@ -1,6 +1,13 @@
 <script>
+  import { disableContextMenu } from "../lib/disableContextMenu";
+
   import { save } from "@tauri-apps/plugin-dialog";
   import { writeTextFile } from "@tauri-apps/plugin-fs";
+  import PopperIcon from "../assets/svg-icon/popper.svelte";
+
+  // 禁用右键菜单和选择文字
+  disableContextMenu();
+
   let srtFileUpload = null;
   // 当期状态
   let stage = "toUploadSRTFile";
@@ -33,14 +40,19 @@
         continue;
       }
 
-      // 如果是时间
-      const timeRegex = /^\d{2}:\d{2}:\d{2}.\d{3}/;
+      // 如果是时间 时间应该以 12:34:56,789 --> 21:43:56,987 这种格式出现
+      const timeRegex = /^\d{2}:\d{2}:\d{2},\d{3}/;
       if (timeRegex.test(textArray[i]) && para == "wait_time") {
         const time = textArray[i].split("-->");
         one.startTime = time[0].trim();
         one.endTime = time[1].trim();
-        const [hour, min, sec] = one.startTime.split(":");
-        one.timestamp = Number(hour) * 3600 + Number(min) * 60 + Number(sec);
+        const [hour, min, secwithmsec] = one.startTime.split(":");
+        const [sec, msec] = secwithmsec.split(",");
+        one.timestamp =
+          Number(hour) * 3600 +
+          Number(min) * 60 +
+          Number(sec) +
+          Number(msec * 0.001);
         para = "wait_content";
         continue;
       }
@@ -74,7 +86,7 @@
   // 处理上传文件
   const handleFileInput = (e) => {
     let file = e.target.files[0];
-    toSaveFileName = `${file.name.split('.')[0]}_rearranged.srt`;
+    toSaveFileName = `${file.name.split(".")[0]}_rearranged.srt`;
     let reader = new FileReader();
     reader.readAsText(file, "UTF-8");
     reader.addEventListener("loadend", (e) => {
@@ -141,12 +153,16 @@
       accept=".srt"
     />
   {:else if stage == "rearrangeComplete"}
-    <div class="w-full text-center mb-4">
-      <h1 class="text-lg">2. Rearrange Complete</h1>
+    <div class="w-full flex gap-1 justify-center items-center mb-4">
+      <h1 class="text-lg">2. Rearrange Complete !</h1>
+      <PopperIcon />
     </div>
     <button
-      class="border-4 border-neutral-400 rounded-lg p-4 hover:bg-slate-100"
-      on:click={() => saveSRTfile()}>Click this button to save it</button
+      class="border-4 border-dashed border-neutral-400 rounded-lg p-4 hover:bg-slate-100"
+      on:click={() => saveSRTfile()}
+      >Click to select a place to <span class="font-bold text-blue-400"
+        >SAVE</span
+      > it</button
     >
   {:else if stage == "saved"}
     <div class="w-full text-center mb-2">

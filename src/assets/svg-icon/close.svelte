@@ -7,7 +7,7 @@
   height="1em"
   viewBox="-0.5 0 25 25"
   fill="none"
-  class={hover ? "stroke-white" : "stroke-neutral-600"}
+  class={hover ? "stroke-white" : "stroke-neutral-500"}
   xmlns="http://www.w3.org/2000/svg"
 >
   <path

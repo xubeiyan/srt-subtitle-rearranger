@@ -12,9 +12,9 @@
 >
   <div></div>
   <span class=" pointer-events-none">SRT Subtitle Rearranger</span>
-  <div class="absolute right-0 top-0">
+  <div class="absolute right-1 top-1">
     <button
-      class="bg-red-300 hover:bg-red-400 size-[2em] flex justify-center items-center"
+      class="bg-red-300 hover:bg-red-400 size-[1.5em] rounded-full flex justify-center items-center"
       on:focus={() => (closeButtonHover = true)}
       on:mouseover={() => (closeButtonHover = true)}
       on:mouseleave={() => (closeButtonHover = false)}
