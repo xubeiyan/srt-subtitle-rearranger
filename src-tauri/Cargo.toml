@@ -1,5 +1,5 @@
 [package]
-name = "tauri-app"
+name = "sub-rearranger"
 version = "0.1.2"
 description = "A Tauri Tool rearrange SRT subtitle"
 authors = ["xubeiyan"]
